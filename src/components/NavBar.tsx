@@ -9,9 +9,9 @@ function NavBar() {
     <div>
       <nav className="navbar navbar-expand-lg mx-3 fs-5  ">
         <div className="container-fluid">
-          <Link to="/" className="navbar-brand mb-2 text-primary fs-1 fw-bold ">
+          <h1  className="navbar-brand mb-2 text-primary fs-1 fw-bold ">
             Secrets
-          </Link>
+          </h1>
 
           <button
             className="navbar-toggler"
@@ -32,7 +32,7 @@ function NavBar() {
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item ms-3">
                 <Link
-                  to="/s"
+                  to="/"
                   className="nav-link active fs-5"
                   aria-current="page"
                 >
@@ -76,7 +76,7 @@ function NavBar() {
           </div>
         </div>
       </nav>
-      <hr className="border border-primary" />
+      <hr className="border border-primary m-0" />
     </div>
   );
 }

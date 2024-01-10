@@ -1,14 +1,64 @@
-import { Link } from "react-router-dom"
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import { FormEvent, useState } from "react";
+import { ChangeHandlerType, LoginFormType } from "../types/types";
+import { useAuth } from "../context/authContext";
+import { toast } from "react-toastify";
 
-function Login(){
-    return(
-        <div className="mt-5  ">
-            <h1 className="text-primary">Log-in</h1>
+function Login() {
+  const { setIsLoggedIn } = useAuth();
+  const navigate = useNavigate();
+
+  const [loginData, setLoginData] = useState<LoginFormType>({
+    email: "",
+    password: "",
+  });
+
+  const onChangeHandler: ChangeHandlerType<LoginFormType> = (e, setState) =>
+    setState({
+      ...loginData,
+      [e.target.name]: e.target.value,
+    });
+
+  async function loginHandler(e: FormEvent, data: LoginFormType) {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+    if (token !== "undefined") {
+      try {
+        if (loginData.email.length >= 1 && loginData.password.length >= 1) {
+          const response = await axios.post(
+            "http://localhost:2100/api/user/login",
+            data,
+            {
+              headers: {
+                authorization: token,
+              },
+            }
+          );
+          if (response.data.success === true) {
+            setIsLoggedIn(true);
+            navigate("/");
+            toast.success("login successFull");
+          } else {
+            toast.info("User is not registered");
+          }
+        } else {
+          toast.info("please fill all the credentials");
+        }
+      } catch (error) {
+        console.log(error);
+        toast.info("User is not registered");
+      }
+    } else {
+      toast.error("please singup first with another email ");
+    }
+  }
+
+  return (
+    <div className="mt-5  ">
+      <h1 className="text-primary">Log-in</h1>
       <div className="w-50   m-auto border  border-1  fs-5 border-primary p-4 rounded-5  text-start">
-        
-        <form className="m-auto">
-          
-          
+        <form className="m-auto" onSubmit={(e) => loginHandler(e, loginData)}>
           <div className="mb-2">
             <label
               htmlFor="exampleInputEmail1"
@@ -17,6 +67,9 @@ function Login(){
               Email address
             </label>
             <input
+              onChange={(e) => onChangeHandler(e, setLoginData)}
+              name="email"
+              placeholder="Enter your email-id here"
               type="email"
               className="form-control"
               id="exampleInputEmail1"
@@ -34,30 +87,26 @@ function Login(){
               Password
             </label>
             <input
+              onChange={(e) => onChangeHandler(e, setLoginData)}
+              name="password"
+              placeholder="Enter your password here"
               type="password"
               className="form-control"
               id="exampleInputPassword1"
             />
           </div>
-          <div className="mb-2 form-check">
-            <input
-              type="checkbox"
-              className="form-check-input"
-              id="exampleCheck1"
-            />
-            <label className="form-check-label" htmlFor="exampleCheck1">
-              Check me out
-            </label>
-          </div>
+
           <button type="submit" className="btn btn-primary  my-2">
             Submit
           </button>
         </form>
         <div>
-          <small className="fw-light">Not a member? <Link to="/signup">Sign up</Link>  </small>
+          <small className="fw-light">
+            Not a member? <Link to="/signup">Sign up</Link>{" "}
+          </small>
         </div>
       </div>
     </div>
-    )
+  );
 }
-export  { Login }
+export { Login };
