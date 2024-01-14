@@ -23,3 +23,5 @@ export type AuthContextType = {
   isLoggedIn: AuthType;
   setIsLoggedIn: Dispatch<React.SetStateAction<AuthType>>;
 };
+
+
