@@ -30,7 +30,7 @@ function Signup() {
         signupData.lastName.length >= 1
       ) {
         const response = await axios.post(
-          "http://localhost:2100/api/user/signup",
+          "https://secrets-a-todo-app.vercel.app/api/user/signup",
           data
         );
         localStorage.setItem("token", response.data.token);

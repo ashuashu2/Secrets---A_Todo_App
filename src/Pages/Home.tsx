@@ -19,7 +19,7 @@ function Home() {
   useEffect(() => {
     (async () => {
       const response = await axios.get(
-        "http://localhost:2100/api/todo/getAllTodo"
+        "https://secrets-a-todo-app.vercel.app/api/todo/getAllTodo"
       );
       setTodosData(response.data.todos);
     })();
@@ -32,7 +32,7 @@ function Home() {
     if (titleData.title.length >= 1) {
       try {
         const response = await axios.post(
-          "http://localhost:2100/api/todo/addtodo",
+          "https://secrets-a-todo-app.vercel.app/api/todo/addtodo",
           data
         );
         setTitleData({ ...titleData, title: "" });
@@ -47,7 +47,7 @@ function Home() {
   async function deleteTodoHandler(id: any) {
     try {
       const response = await axios.post(
-        "http://localhost:2100/api/todo/deletetodo",
+        "https://secrets-a-todo-app.vercel.app/api/todo/deletetodo",
         {
           _id: id,
         }
@@ -61,7 +61,7 @@ function Home() {
   async function updateTodoHandler(id: any, data: any) {
     try {
       const response = await axios.post(
-        "http://localhost:2100/api/todo/updatetodo",
+        "https://secrets-a-todo-app.vercel.app/api/todo/updatetodo",
         {
           _id: id,
           updateData: data,
