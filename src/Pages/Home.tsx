@@ -10,11 +10,11 @@ function Home() {
   };
 
   const [titleData, setTitleData] = useState<todoType>({ title: "" });
-  const [editTodo, setEditTodo] = useState<todoType>({ title: "ashu" });
+  const [editTodo, setEditTodo] = useState<todoType>({ title: "" });
 
   const [todosData, setTodosData] = useState<any[]>([]);
   const [todosData2, setTodosData2] = useState<any[]>([]);
-  const [editInput, setEditInput] = useState<string>("ashju");
+  const [editInput, setEditInput] = useState<string>("");
 
   useEffect(() => {
     (async () => {
